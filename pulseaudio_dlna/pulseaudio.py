@@ -842,14 +842,15 @@ class PulseWatcher(PulseAudio):
         logger.info('Added the device "{name} ({flavour})".'.format(
             name=device.name, flavour=device.flavour))
         if self.default_sink_device is not None:
-            process = subprocess.Popen(
-            ['pactl', 'set-default-sink', str(device.index)],
-            stdout=subprocess.PIPE)
-            stdout, stderr = process.communicate()
-            if process.returncode == 0:
-                logger.info('Set default sink to {name}'.format(name=device.name))
-            else:
-                logger.info('Could not default sink to {name}'.format(name=device.name))
+            if self.default_sink_device in device.name:
+                process = subprocess.Popen(
+                ['pactl', 'set-default-sink', str(device.index)],
+                stdout=subprocess.PIPE)
+                stdout, stderr = process.communicate()
+                if process.returncode == 0:
+                    logger.info('Set default sink to {name}'.format(name=device.name))
+                else:
+                    logger.info('Could not default sink to {name}'.format(name=device.name))
                 
     def remove_device(self, device):
         bridge_index_to_remove = None
