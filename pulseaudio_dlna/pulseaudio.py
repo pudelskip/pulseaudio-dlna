@@ -835,17 +835,15 @@ class PulseWatcher(PulseAudio):
         return False
 
     def set_device_for_inputs(self, device_name):
-        process = subprocess.Popen(
-            ['pacmd' 'list-sink-inputs'],
-            stdout=subprocess.PIPE)
+        process = subprocess.Popen(['pacmd', 'list-sink-inputs'],stdout=subprocess.PIPE)
         stdout, stderr = process.communicate()
+        print(stdout[:5])
         if process.returncode == 0:
             apps = re.findall(r'\s+index:\s+(\w+).*\n', stdout)
             devices = re.findall(r'\s+sink:.+<(.+)>.*\n', stdout)
             for i in range(len(apps)):
-                if devices[i] != device_name:
-                    ['pactl', 'move-sink-input', str(apps[i]), device_name]
-                    process = subprocess.Popen(['pacmd' 'list-sink-inputs'],stdout=subprocess.PIPE)
+                if devices[i] != device_name:                    
+                    process = subprocess.Popen(['pactl', 'move-sink-input', str(apps[i]), device_name],stdout=subprocess.PIPE)
                     _, _ = process.communicate()
 
 
@@ -865,7 +863,7 @@ class PulseWatcher(PulseAudio):
                 stdout, stderr = process.communicate()
                 if process.returncode == 0:
                     logger.info('Set default sink to {name}'.format(name=device.name))
-                    set_device_for_inputs(str(device.short_name))
+                    self.set_device_for_inputs(str(device.short_name))
                 else:
                     logger.info('Could not default sink to {name}'.format(name=device.name))
                 
