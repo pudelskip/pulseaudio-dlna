@@ -845,7 +845,7 @@ class PulseWatcher(PulseAudio):
         if self.default_sink_device is not None:
             if self.default_sink_device in device.name:
                 process = subprocess.Popen(
-                ['pactl', 'set-default-sink', str(device.index)],
+                ['pactl', 'set-default-sink', str(device.short_name)],
                 stdout=subprocess.PIPE)
                 stdout, stderr = process.communicate()
                 if process.returncode == 0:
