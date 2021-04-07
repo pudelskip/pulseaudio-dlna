@@ -71,6 +71,7 @@ Options:
     --ssdp-mx=<ssdp-mx>                    Set the MX value of the SSDP discovery message [default: 3].
     --ssdp-amount=<ssdp-amount>            Set the amount of SSDP discovery messages being sent [default: 5].
     --msearch-port=<msearch-port>          Set the source port of the MSEARCH socket [default: random].
+    --default-sink-device=<name>           Switch to this device.
     --cover-mode=<mode>                    Set the cover mode [default: default].
                                            Possible modes are:
                                              - disabled       No icon is shown
