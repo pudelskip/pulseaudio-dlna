@@ -237,6 +237,10 @@ class Application(object):
         disable_auto_reconnect = True
         if options['--auto-reconnect']:
             disable_auto_reconnect = False
+        
+        default_sink_device = None
+        if options['--default-sink-device']:
+            default_sink_device = str(options['--default-sink-device'])
 
         pulse_queue = multiprocessing.Queue()
         stream_queue = multiprocessing.Queue()
@@ -254,6 +258,7 @@ class Application(object):
             disable_auto_reconnect=disable_auto_reconnect,
             cover_mode=cover_mode,
             proc_title='pulse_watcher',
+            default_sink_device=default_sink_device
         )
 
         device_filter = None

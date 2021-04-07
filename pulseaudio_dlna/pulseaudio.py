@@ -577,7 +577,7 @@ class PulseWatcher(PulseAudio):
 
     def __init__(self, pulse_queue, stream_queue, disable_switchback=False,
                  disable_device_stop=False, disable_auto_reconnect=True,
-                 cover_mode='application', proc_title=None):
+                 cover_mode='application', proc_title=None, default_sink_device=None):
         PulseAudio.__init__(self)
 
         self.bridges = []
@@ -841,7 +841,16 @@ class PulseWatcher(PulseAudio):
         self.share_bridges()
         logger.info('Added the device "{name} ({flavour})".'.format(
             name=device.name, flavour=device.flavour))
-
+        if self.default_sink_device is not None:
+            process = subprocess.Popen(
+            ['pactl', 'set-default-sink', str(device.index)],
+            stdout=subprocess.PIPE)
+            stdout, stderr = process.communicate()
+            if process.returncode == 0:
+                logger.info('Set default sink to {name}'.format(name=device.name))
+            else:
+                logger.info('Could not default sink to {name}'.format(name=device.name))
+                
     def remove_device(self, device):
         bridge_index_to_remove = None
         for index, bridge in enumerate(self.bridges):
