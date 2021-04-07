@@ -580,6 +580,7 @@ class PulseWatcher(PulseAudio):
                  cover_mode='application', proc_title=None, default_sink_device=None):
         PulseAudio.__init__(self)
 
+        self.default_sink_device=default_sink_device
         self.bridges = []
         self.pulse_queue = pulse_queue
         self.stream_queue = stream_queue

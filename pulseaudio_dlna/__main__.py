@@ -25,6 +25,7 @@ Usage:
                     [--chunk-size <chunk-size>]
                     [--msearch-port=<msearch-port>] [--ssdp-mx <ssdp-mx>] [--ssdp-ttl <ssdp-ttl>] [--ssdp-amount <ssdp-amount>]
                     [--cover-mode <mode>]
+                    [--default-sink-device <name>]
                     [--auto-reconnect]
                     [--debug]
                     [--fake-http10-content-length] [--fake-http-content-length]
